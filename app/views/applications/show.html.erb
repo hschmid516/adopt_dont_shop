@@ -10,9 +10,11 @@
   <li>Description: <%= @app.description %></li>
   <li>Status: <%= @app.status %></li>
   <li>Pets:
+    <ul>
       <% @pets.each do |pet| %>
-      <ul id="app-<%= pet.id %>">
-      <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
+        <section id="app-<%= pet.id %>">
+        <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
+        </section>
       <% end %>
     </ul>
   </li>
