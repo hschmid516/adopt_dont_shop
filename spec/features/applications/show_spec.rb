@@ -22,4 +22,18 @@ RSpec.describe 'applications' do
     expect(page).to have_content(@pet1.name)
     expect(page).to have_content(@pet2.name)
   end
+
+  it "links to each pet's show page" do
+    within("#app-#{@pet1.id}") do
+      click_link("#{@pet1.name}")
+
+      expect(current_path).to eq("/pets/#{@pet1.id}")
+    end
+
+    within("#app-#{@pet2.id}") do
+      click_link("#{@pet1.name}")
+
+      expect(current_path).to eq("/pets/#{@pet2.id}")
+    end
+  end
 end
