@@ -44,9 +44,9 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'simplecov'
-  gem 'faker'
-  gem 'factory_bot_rails'
 end
+gem 'faker'
+gem 'factory_bot_rails'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
