@@ -9,7 +9,11 @@ class ApplicationsController < ApplicationController
     redirect_to "/applications/#{@app.id}"
   end
 
+  private
+
   def application_params
-    params.permit(:name, :street_address, :city, :state, :zip)
+    params
+      .permit(:name, :street_address, :city, :state, :zip)
+      .with_defaults(status: 'In Progress')
   end
 end
