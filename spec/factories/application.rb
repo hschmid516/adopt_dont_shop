@@ -6,6 +6,6 @@ FactoryBot.define do
     state { Faker::Address.state_abbr }
     zip { Faker::Address.zip_code }
     description { Faker::TvShows::RickAndMorty.unique.quote }
-    status { ["In Progress", "Pending", "Accepted", "Rejected"].sample }
+    status { "In Progress" }
   end
 end
