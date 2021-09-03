@@ -1,0 +1,37 @@
+<h1><%= @app.name %>'s Application</h1>
+
+<h3>Application Info</h3>
+<ul>
+  <li>Name: <%= @app.name %></li>
+  <li>Address: <%= @app.street_address %><br>
+  &emsp;&emsp;&emsp;&ensp;&nbsp;<%= @app.city %>, <%= @app.state %> <%= @app.zip %></li>
+  <li>Description: <%= @app.description %></li>
+  <li>Pets:
+    <ul>
+      <% @app.pets.each do |pet| %>
+        <section id="app-<%= pet.id %>">
+        <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
+        </section>
+      <% end %>
+    </ul>
+  </li>
+  <li>Status: <%= @app.status %></li>
+</ul>
+
+<h3>Add a Pet to this Application</h3>
+
+<%= form_with url: "/applications/#{@app.id}", method: :get, local: true do |f| %>
+  <%= f.label :search, 'Search for Pet by Name:' %>
+  <%= f.text_field :search %>
+  <%= f.submit 'Search' %>
+<% end %>
+
+<% if !@pets.nil? %>
+  <% @pets.each do |pet| %>
+  <h3><%= pet.name %></h3>
+  <p>Age: <%= pet.age %></p>
+  <p>Breed: <%= pet.breed %></p>
+  <p>Adoptable: </p>
+  <p>You can find <%= pet.name %> at <%= pet.shelter_name %>!</p>
+  <% end %>
+<% end %>
