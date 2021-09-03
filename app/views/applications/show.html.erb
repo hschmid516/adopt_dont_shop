@@ -11,7 +11,7 @@
   <li>Status: <%= @app.status %></li>
   <li>Pets:
     <ul>
-      <% @pets.each do |pet| %>
+      <% @app.pets.each do |pet| %>
         <section id="app-<%= pet.id %>">
         <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
         </section>

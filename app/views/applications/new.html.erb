@@ -1,0 +1,15 @@
+<h1>Create New Application</h1>
+
+<%= form_with model: Application.new, local: true do |f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br><br>
+  <%= f.label :street_address %><br>
+  <%= f.text_field :street_address %><br><br>
+  <%= f.label :city %><br>
+  <%= f.text_field :city %><br><br>
+  <%= f.label :state %><br>
+  <%= f.text_field :state %><br><br>
+  <%= f.label :zip, 'Zip code' %><br>
+  <%= f.text_field :zip %><br><br>
+  <%= f.submit 'Submit'%>
+<% end %>
