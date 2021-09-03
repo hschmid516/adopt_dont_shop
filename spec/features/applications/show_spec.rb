@@ -38,4 +38,15 @@ RSpec.describe 'applications' do
       expect(current_path).to eq("/pets/#{@pet2.id}")
     end
   end
+
+  it 'can search for pets to add' do
+    expect(page).to have_content('Add a Pet to this Application')
+
+    fill_in 'Search for Pet by Name:', with: "#{@pet1.name}"
+    click_button('Search')
+    require 'pry'; binding.pry
+    expect(current_path).to eq("/applications/#{@app.id}")
+    expect(page).to have_content("#{@pet1.name}")
+    expect(page).to_not have_content("#{@pet2.name}")
+  end
 end
