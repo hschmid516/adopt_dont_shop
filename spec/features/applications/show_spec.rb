@@ -30,8 +30,10 @@ RSpec.describe 'applications' do
       expect(current_path).to eq("/pets/#{@pet1.id}")
     end
 
+    visit "/applications/#{@app.id}"
+
     within("#app-#{@pet2.id}") do
-      click_link("#{@pet1.name}")
+      click_link("#{@pet2.name}")
 
       expect(current_path).to eq("/pets/#{@pet2.id}")
     end
