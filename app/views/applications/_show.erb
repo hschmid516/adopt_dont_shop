@@ -1,0 +1,24 @@
+<h1><%= @app.name %>'s Application</h1>
+
+<h3>Application Info</h3>
+<ul>
+  <li>Name: <%= @app.name %></li>
+  <li>Address: <%= @app.street_address %><br>
+  &emsp;&emsp;&emsp;&ensp;&nbsp;<%= @app.city %>, <%= @app.state %> <%= @app.zip %></li>
+  <li>Description: <%= @app.description %></li>
+  <li>Pets:
+    <ul>
+      <% @app.pets.each do |pet| %>
+        <section id="app-<%= pet.id %>">
+        <li><%= link_to pet.name, "/pets/#{pet.id}" %>
+          <% if admin && pet.pet_app_status(@app.id) != 'Approved'  %>
+            <%= button_to "Approve", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: "#{pet.id}" } %>
+          <% elsif pet.pet_app_status(@app.id) == 'Approved'%>
+            <%= 'Approved' %></li>
+          <% end %>
+        </section>
+      <% end %>
+    </ul>
+  </li>
+  <li>Status: <%= @app.status %></li>
+</ul>
