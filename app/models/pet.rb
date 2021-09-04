@@ -13,6 +13,11 @@ class Pet < ApplicationRecord
     where(adoptable: true)
   end
 
+  def pet_app_status(app_id)
+    PetApp.where(pet_id: id, application_id: app_id).first.status
+  end
+
+
   # def self.pets_in_app(app_id)
   #   joins(:applications).joins(:pet_apps).where(pet_apps: {application_id: app_id}).distinct
   # end

@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
-  # def index
-  #   @apps = Application.all
-  # end
+  def index
+    @apps = Application.all
+  end
 
   def show
     @app = Application.find(params[:id])
@@ -29,8 +29,6 @@ class ApplicationsController < ApplicationController
   private
 
   def app_params
-    params
-      .permit(:name, :street_address, :city, :state, :zip)
-      .with_defaults(status: 'In Progress')
+    params.permit(:name, :street_address, :city, :state, :zip)
   end
 end
