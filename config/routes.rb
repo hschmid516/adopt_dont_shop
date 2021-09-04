@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   resources :applications
+  
+  namespace :admin do
+    resources :shelters
+  end
 
   get '/', to: 'application#welcome'
 
