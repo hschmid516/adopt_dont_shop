@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   resources :applications
+
+  patch '/admin/applications/:id', to: 'pet_apps#update'
   
   namespace :admin do
     resources :shelters
+    resources :applications
   end
 
   get '/', to: 'application#welcome'

@@ -5,6 +5,6 @@ class Application < ApplicationRecord
                         :state,
                         :zip
 
-  has_many :pet_apps, dependent: :delete_all
+  has_many :pet_apps, dependent: :destroy
   has_many :pets, through: :pet_apps
 end
