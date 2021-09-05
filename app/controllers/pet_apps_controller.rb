@@ -8,7 +8,11 @@ class PetAppsController < ApplicationController
 
   def update
     pet_app = PetApp.pet_app_by_ids(params[:pet_id], params[:id])
-    pet_app.update(status: 'Approved')
+    if params[:approve]
+      pet_app.update(status: 'Approved')
+    else 
+      pet_app.update(status: 'Rejected')
+    end
     redirect_to "/admin/applications/#{@app.id}?pet_id=#{@pet.id}"
   end
 

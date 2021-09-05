@@ -8,7 +8,7 @@
   <% end %>
 <% end %>
 
-<%  if @app.status == 'In Progress' %>
+<% if @app.status == 'In Progress' %>
   <h3>Add a Pet to this Application</h3>
 
   <%= form_with url: "/applications/#{@app.id}", method: :get, local: true do |f| %>
@@ -17,8 +17,7 @@
     <%= f.submit 'Search' %>
   <% end %>
 
-  <% if !@pets.nil? %>
-    <% @pets.each do |pet| %>
+  <% @pets&.each do |pet| %>
     <section id='pet-<%= pet.id %>'>
       <h3><%= pet.name %></h3>
       <p>Age: <%= pet.age %></p>
@@ -27,6 +26,5 @@
       <p>You can find <%= pet.name %> at <%= pet.shelter_name %>!</p>
       <%= button_to "Add Pet to Application", "/applications/#{@app.id}", method: :post, params: {pet_id: "#{pet.id}"} %>
     <% end %>
-    </section>
-  <% end %>
+  </section>
 <% end %>
