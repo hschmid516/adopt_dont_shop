@@ -16,12 +16,11 @@ RSpec.describe "Admin::Shelters" do
     visit "/admin/applications/#{@app1.id}"
   end
 
-  it 'has button to approve each pet' do
+  it 'can approve pets' do
     within("#app-#{@pet1.id}") do
       click_button('Approve')
 
       expect(current_path).to eq("/admin/applications/#{@app1.id}")
-      save_and_open_page
       expect(page).to_not have_button('Approve')
       expect(page).to have_content('Approved')
     end
@@ -29,6 +28,21 @@ RSpec.describe "Admin::Shelters" do
     within("#app-#{@pet2.id}") do
       expect(page).to have_button('Approve')
       expect(page).to_not have_content('Approved')
+    end
+  end
+
+  it 'can reject pets' do
+    within("#app-#{@pet1.id}") do
+      click_button('Reject')
+
+      expect(current_path).to eq("/admin/applications/#{@app1.id}")
+      expect(page).to_not have_button('Reject')
+      expect(page).to have_content('Rejected')
+    end
+
+    within("#app-#{@pet2.id}") do
+      expect(page).to have_button('Reject')
+      expect(page).to_not have_content('Rejected')
     end
   end
 end

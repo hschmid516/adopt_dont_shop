@@ -42,7 +42,7 @@ RSpec.describe 'applications' do
     end
   end
 
-  describe 'show application' do
+  describe 'search and add pets' do
     before :each do
       @shelter = create(:shelter)
       @pet1 = create(:pet, shelter: @shelter)
