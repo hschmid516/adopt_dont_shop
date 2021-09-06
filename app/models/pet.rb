@@ -16,8 +16,8 @@ class Pet < ApplicationRecord
   def pet_app_status(app_id)
     PetApp.where(pet_id: id, application_id: app_id).first.status
   end
-  #
-  # def approved_app?
-  #   applications.where(status: 'Approved').exists?
-  # end
+
+  def approved_app?
+    applications.where(status: 'Approved').exists?
+  end
 end
