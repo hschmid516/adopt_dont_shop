@@ -12,7 +12,7 @@ RSpec.describe "Admin::Applications" do
       @app1 = create(:application, status: 'Pending')
       @app2 = create(:application, status: 'Pending')
       @app2 = create(:application)
-      @q = PetApp.create!(application: @app1, pet: @pet1)
+      PetApp.create!(application: @app1, pet: @pet1)
       PetApp.create!(application: @app1, pet: @pet2)
       PetApp.create!(application: @app2, pet: @pet1)
       PetApp.create!(application: @app2, pet: @pet2)
@@ -142,6 +142,22 @@ RSpec.describe "Admin::Applications" do
 
       @app.reload
       expect(@app.status).to eq('Rejected')
+    end
+
+    it 'makes pets not adoptable if app approved' do
+      within("#app-#{@pet1.id}") do
+        click_button('Approve')
+      end
+
+      within("#app-#{@pet2.id}") do
+        click_button('Approve')
+      end
+
+      within("#app-#{@pet3.id}") do
+        click_button('Approve')
+      end
+      @pet1.reload
+      expect(@pet1.adoptable).to eq(false)
     end
   end
 end

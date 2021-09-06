@@ -25,4 +25,28 @@ RSpec.describe 'the shelter show' do
     expect(page).to have_current_path('/pets')
     expect(page).to_not have_content(pet.name)
   end
+
+  it 'pets are not adoptable when app is approved' do
+    @shelter = create(:shelter, name: 'Dogtown and Z-Boys')
+    @pet1 = create(:pet, shelter: @shelter)
+    @pet2 = create(:pet, shelter: @shelter)
+    @app = create(:application)
+    PetApp.create!(application: @app, pet: @pet1)
+    PetApp.create!(application: @app, pet: @pet2)
+    visit "/admin/applications/#{@app.id}"
+
+    within("#app-#{@pet1.id}") do
+      click_button('Approve')
+    end
+
+    within("#app-#{@pet2.id}") do
+      click_button('Approve')
+    end
+
+    visit "/pets/#{@pet1.id}"
+    expect(page).to have_content(false)
+
+    visit "/pets/#{@pet2.id}"
+    expect(page).to have_content(false)
+  end
 end
