@@ -6,19 +6,6 @@ class PetAppsController < ApplicationController
     redirect_to "/applications/#{@app.id}"
   end
 
-  # def update
-  #   pet_app = PetApp.pet_app_by_ids(params[:pet_id], params[:id])
-  #   if params[:approve]
-  #     pet_app.update(status: 'Approved')
-  #     if @app.pets_approved?
-  #       @app.update(status: 'Approved')
-  #     end
-  #   else
-  #     pet_app.update(status: 'Rejected')
-  #   end
-  #   redirect_to "/admin/applications/#{@app.id}?pet_id=#{@pet.id}"
-  # end
-
   private
 
   def find_by_id
