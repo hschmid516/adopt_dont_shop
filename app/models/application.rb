@@ -18,4 +18,16 @@ class Application < ApplicationRecord
     (pet_app.count == pet_app.where(status: ['Approved', 'Rejected']).count &&
       pet_app.where(status: 'Rejected').exists? == true) && pet_app.count != 0
   end
+
+  def update_status!
+    if pets_approved?
+      update(status: 'Approved')
+    elsif pets_rejected?
+      update(status: 'Rejected')
+    end
+  end
+
+  def adopt_pets!
+    pets.update_all(adoptable: false)
+  end
 end
