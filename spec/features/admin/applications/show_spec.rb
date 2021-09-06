@@ -86,15 +86,18 @@ RSpec.describe "Admin::Applications" do
       @pet1 = create(:pet, shelter: @shelter)
       @pet2 = create(:pet, shelter: @shelter)
       @pet3 = create(:pet, shelter: @shelter)
-      @app = create(:application, status: 'Pending')
-      PetApp.create!(application: @app, pet: @pet1)
-      PetApp.create!(application: @app, pet: @pet2)
-      PetApp.create!(application: @app, pet: @pet3)
-      visit "/admin/applications/#{@app.id}"
+      @app1 = create(:application, status: 'Pending')
+      @app2 = create(:application, status: 'Pending')
+      PetApp.create!(application: @app1, pet: @pet1)
+      PetApp.create!(application: @app1, pet: @pet2)
+      PetApp.create!(application: @app1, pet: @pet3)
+      PetApp.create!(application: @app2, pet: @pet1)
+
+      visit "/admin/applications/#{@app1.id}"
     end
 
     it 'approves app when all pets are approved' do
-      expect(@app.status).to eq('Pending')
+      expect(@app1.status).to eq('Pending')
 
       within("#app-#{@pet1.id}") do
         click_button('Approve')
@@ -104,23 +107,21 @@ RSpec.describe "Admin::Applications" do
         click_button('Approve')
       end
 
-      @app.reload
+      @app1.reload
 
-      expect(@app.status).to eq('Pending')
+      expect(@app1.status).to eq('Pending')
 
       within("#app-#{@pet3.id}") do
         click_button('Approve')
       end
 
-      expect(@app.status).to eq('Pending')
+      @app1.reload
+
+      expect(@app1.status).to eq('Approved')
 
       within("#app_info") do
         expect(page).to have_content('Approved')
       end
-
-      @app.reload
-
-      expect(@app.status).to eq('Approved')
     end
 
     it 'rejects app when > 1 pets are rejected and all others have been accepted' do
@@ -140,8 +141,8 @@ RSpec.describe "Admin::Applications" do
         expect(page).to have_content('Rejected')
       end
 
-      @app.reload
-      expect(@app.status).to eq('Rejected')
+      @app1.reload
+      expect(@app1.status).to eq('Rejected')
     end
 
     it 'makes pets not adoptable if app approved' do
@@ -156,8 +157,26 @@ RSpec.describe "Admin::Applications" do
       within("#app-#{@pet3.id}") do
         click_button('Approve')
       end
+
       @pet1.reload
+
       expect(@pet1.adoptable).to eq(false)
+    end
+
+    it 'cannot approve if pet has approved app' do
+      visit "/admin/applications/#{@app2.id}"
+
+      within("#app-#{@pet1.id}") do
+        click_button('Approve')
+      end
+
+      @pet1.reload
+
+      visit "/admin/applications/#{@app1.id}"
+
+      within("#app-#{@pet1.id}") do
+        expect(page).to_not have_button('Approve')
+      end
     end
   end
 end
