@@ -67,5 +67,21 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_1.pet_count).to eq(3)
       end
     end
+
+    describe '.order_by_name' do
+      it 'orders shelters by name' do
+        expect(Shelter.order_by_name).to eq([@shelter_1, @shelter_3, @shelter_2])
+      end
+    end
+
+    describe '.pending_apps' do
+      it 'shows shelters with pending apps' do
+        app_1 = create(:application, status: 'Pending')
+        app_2 = create(:application, status: 'Pending')
+        PetApp.create!(application: app_1, pet: @pet_1)
+        PetApp.create!(application: app_1, pet: @pet_3)
+        expect(Shelter.pending_apps).to eq([@shelter_1, @shelter_3])
+      end
+    end
   end
 end
