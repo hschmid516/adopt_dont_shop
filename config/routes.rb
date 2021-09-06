@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :applications
 
-  patch '/admin/applications/:id', to: 'pet_apps#update'
-  
+  patch '/admin/applications/:id', to: 'admin/applications#update'
+
   namespace :admin do
     resources :shelters
     resources :applications

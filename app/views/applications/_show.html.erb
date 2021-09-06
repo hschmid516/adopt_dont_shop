@@ -1,6 +1,7 @@
 <h1><%= @app.name %>'s Application</h1>
 
 <h3>Application Info</h3>
+
 <ul>
   <li>Name: <%= @app.name %></li>
   <li>Address: <%= @app.street_address %><br>
@@ -12,14 +13,16 @@
         <section id="app-<%= pet.id %>">
         <li><%= link_to pet.name, "/pets/#{pet.id}" %>
           <% if admin && pet.pet_app_status(@app.id).nil?  %>
-            <%= button_to "Approve", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: "#{pet.id}", approve: true} %>
-            <%= button_to "Reject", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: "#{pet.id}" } %>
-          <% else %>
+            <%= button_to "Approve", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: pet.id, approve: true} %>
+            <%= button_to "Reject", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: pet.id } %>
+          <% elsif admin %>
             <%= pet.pet_app_status(@app.id) %></li>
           <% end %>
         </section>
       <% end %>
     </ul>
   </li>
-  <li>Status: <%= @app.status %></li>
+    <section id='app_info'>
+      <li>Status: <%= @app.status %></li>
+    </section>
 </ul>
