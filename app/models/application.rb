@@ -9,14 +9,12 @@ class Application < ApplicationRecord
   has_many :pets, through: :pet_apps
 
   def pets_approved?
-    pet_app = PetApp.where(application_id: id)
-    pet_app.count == pet_app.where(status: 'Approved').count && pet_app.count != 0
+    !PetApp.where(application_id: id, status: [nil, 'Rejected']).exists?
   end
 
   def pets_rejected?
-    pet_app = PetApp.where(application_id: id)
-    (pet_app.count == pet_app.where(status: ['Approved', 'Rejected']).count &&
-      pet_app.where(status: 'Rejected').exists? == true) && pet_app.count != 0
+    PetApp.where(application_id: id).where(status: 'Rejected').exists? &&
+      !pet_apps.where(status: nil).exists?
   end
 
   def update_status!
