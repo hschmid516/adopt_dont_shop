@@ -1,0 +1,10 @@
+<% if pet.pet_app_status(@app.id).nil? %>
+  <% if pet.adoptable %>
+    <%= button_to "Approve", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: pet.id, approve: true} %>
+    <%= render partial: 'reject', locals: { pet: pet } %>
+  <% else %>
+    <%= render partial: 'reject', locals: { pet: pet } %>
+  <% end %>
+<% else %>
+  <%= pet.pet_app_status(@app.id) %>
+<% end %>
