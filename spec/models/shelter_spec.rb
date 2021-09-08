@@ -83,5 +83,17 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.pending_apps).to eq([@shelter_1, @shelter_3])
       end
     end
+
+    describe '.find_name' do
+      it 'finds shelter name' do
+        expect(@shelter_1.find_name).to eq(@shelter_1.name)
+      end
+    end
+
+    describe '.find_city' do
+      it 'finds shelter city' do
+        expect(@shelter_1.find_city).to eq(@shelter_1.city)
+      end
+    end
   end
 end
