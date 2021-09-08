@@ -11,16 +11,15 @@ RSpec.describe Application do
     pet2 = create(:pet, shelter: shelter)
     pet3 = create(:pet, shelter: shelter)
 
-    expect(app.pets_approved?).to eq(false)
-
     PetApp.create!(application: app, pet: pet1, status: 'Approved')
     PetApp.create!(application: app, pet: pet2, status: 'Approved')
-
-    expect(app.pets_approved?).to eq(true)
-
-    PetApp.create!(application: app, pet: pet3, status: 'Rejected')
+    pet_app = PetApp.create!(application: app, pet: pet3)
 
     expect(app.pets_approved?).to eq(false)
+
+    pet_app.update_status!('Approved')
+
+    expect(app.pets_approved?).to eq(true)
   end
 
   it 'checks if > 1 pets rejected and all others approved' do
