@@ -15,12 +15,26 @@
         <%= msg %>
       </div>
     <% end %>
-    <section>
-      <p><%= link_to "Pets", "/pets" %></p>
-      <p><%= link_to "Shelters", "/shelters" %></p>
-      <p><%= link_to "Veterinarians", "/veterinarians" %></p>
-      <p><%= link_to "Veterinary Offices", "/veterinary_offices" %></p>
-    </section>
-    <%= yield %>
+      <div class="d-flex" id="wrapper">
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light">Adopt, Don't Shop</div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/pets">Pets</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/shelters">Shelters</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/applications">Applications</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/shelters">Admin: Shelters</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/applications">Admin: Applications</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/veterinarians">Veterinarians</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/veterinary_offices">Veterinary Offices</a>
+            </div>
+        </div>
+      <div id="page-content-wrapper">
+          <!-- Page content-->
+          <div class="container-fluid">
+            <%= yield %>
+          </div>
+      </div>
+    </div>
+
   </body>
 </html>
