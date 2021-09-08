@@ -12,12 +12,9 @@
       <% @app.pets.each do |pet| %>
         <section id="app-<%= pet.id %>">
         <li><%= link_to pet.name, "/pets/#{pet.id}" %>
-          <% if admin && pet.pet_app_status(@app.id).nil? && pet.adoptable %>
-            <%= button_to "Approve", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: pet.id, approve: true} %>
-            <%= button_to "Reject", "/admin/applications/#{@app.id}", method: :patch, params: { pet_id: pet.id } %>
-          <% elsif admin %>
-            <%= pet.pet_app_status(@app.id) %></li>
-          <% end %>
+          <% if admin %>
+            <%= render partial: 'buttons', locals: { pet: pet } %>
+          <% end %></li>
         </section>
       <% end %>
     </ul>
