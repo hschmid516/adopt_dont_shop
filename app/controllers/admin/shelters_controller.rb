@@ -3,4 +3,8 @@ class Admin::SheltersController < ApplicationController
     @shelters = Shelter.order_by_name
     @shelters_pending = Shelter.pending_apps
   end
+
+  def show
+    @shelter = Shelter.find(params[:id])
+  end
 end
