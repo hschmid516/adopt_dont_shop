@@ -41,4 +41,48 @@ RSpec.describe Application do
 
     expect(app.pets_rejected?).to eq(true)
   end
+
+  it 'can update status to accepted' do
+    shelter = create(:shelter, name: 'Dogtown and Z-Boys')
+    app = create(:application, status: 'Pending')
+    pet1 = create(:pet, shelter: shelter)
+    pet2 = create(:pet, shelter: shelter)
+    pet3 = create(:pet, shelter: shelter)
+
+    PetApp.create!(application: app, pet: pet1, status: 'Approved')
+    PetApp.create!(application: app, pet: pet2, status: 'Approved')
+    PetApp.create!(application: app, pet: pet3, status: 'Approved')
+
+    app.update_status!
+
+    expect(app.status).to eq('Approved')
+  end
+
+  it 'can update status to rejected' do
+    shelter = create(:shelter, name: 'Dogtown and Z-Boys')
+    app = create(:application, status: 'Pending')
+    pet1 = create(:pet, shelter: shelter)
+    pet2 = create(:pet, shelter: shelter)
+    pet3 = create(:pet, shelter: shelter)
+
+    PetApp.create!(application: app, pet: pet1, status: 'Approved')
+    PetApp.create!(application: app, pet: pet2, status: 'Approved')
+    PetApp.create!(application: app, pet: pet3, status: 'Rejected')
+
+    app.update_status!
+
+    expect(app.status).to eq('Rejected')
+  end
+
+  it 'can update pets to not adoptable' do
+    shelter = create(:shelter, name: 'Dogtown and Z-Boys')
+    app = create(:application, status: 'Pending')
+    pet1 = create(:pet, shelter: shelter)
+    pet2 = create(:pet, shelter: shelter)
+
+    app.adopt_pets!
+
+    expect(pet1.adoptable).to eq(true)
+    expect(pet2.adoptable).to eq(true)
+  end
 end
