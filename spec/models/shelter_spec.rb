@@ -13,7 +13,7 @@ RSpec.describe Shelter, type: :model do
   end
 
   before(:each) do
-    @shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+    @shelter_1 = Shelter.create(name: 'ZAurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
     @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
     @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
@@ -70,17 +70,17 @@ RSpec.describe Shelter, type: :model do
 
     describe '.order_by_name' do
       it 'orders shelters by name' do
-        expect(Shelter.order_by_name).to eq([@shelter_1, @shelter_3, @shelter_2])
+        expect(Shelter.order_by_name).to eq([@shelter_3, @shelter_2, @shelter_1])
       end
     end
 
     describe '.pending_apps' do
-      it 'shows shelters with pending apps' do
+      it 'shows shelters with pending apps alphabetically' do
         app_1 = create(:application, status: 'Pending')
         app_2 = create(:application, status: 'Pending')
         PetApp.create!(application: app_1, pet: @pet_1)
         PetApp.create!(application: app_1, pet: @pet_3)
-        expect(Shelter.pending_apps).to eq([@shelter_1, @shelter_3])
+        expect(Shelter.pending_apps_ordered).to eq([@shelter_3, @shelter_1])
       end
     end
 
